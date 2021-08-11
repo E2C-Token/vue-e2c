@@ -3,9 +3,10 @@ import Router from "vue-router";
 import Home from "./views/Home.vue";
 import Admin from "./views/Admin.vue";
 import Overview from "./views/Overview.vue";
-import Products from "./views/Products.vue";
-import Orders from "./views/Orders.vue";
+import Transactions from "./views/Transactions.vue";
+import WishAccess from "./views/WishAccess.vue";
 import Profile from "./views/Profile.vue";
+import Avaiable from "./views/Avaiable.vue";
 import {fb} from './firebase'
 
 Vue.use(Router);
@@ -31,9 +32,9 @@ const router =  new Router({
           component: Overview
         },
         {
-          path: "products",
-          name: "products",
-          component: Products
+          path: "transactions",
+          name: "transactions",
+          component: Transactions
         },
         {
           path: "profile",
@@ -41,9 +42,14 @@ const router =  new Router({
           component: Profile
         },
         {
-          path: "orders",
-          name: "orders",
-          component: Orders
+          path: "wishAccess",
+          name: "wishAccess",
+          component: WishAccess
+        },
+        {
+          path: "avaiable",
+          name: "avaiable",
+          component: Avaiable
         }
       ]
     },

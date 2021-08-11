@@ -4,6 +4,7 @@ import router from "./router";
 import jQuery from 'jquery';
 import {fb}   from './firebase'
 import VueFirestore from 'vue-firestore'
+
 require('firebase/firestore')
 
 
@@ -48,6 +49,8 @@ Vue.component('add-to-cart', require('./components/AddToCart.vue').default);
 Vue.component('mini-cart', require('./components/MiniCart.vue').default);
 Vue.component('products-list', require('./sections/ProductList.vue').default);
 
+
+
 import VueCarousel from 'vue-carousel';
 Vue.use(VueCarousel);
 
@@ -65,8 +68,12 @@ fb.auth().onAuthStateChanged(function(user) {
     }).$mount("#app");
     
   }
+  if (user) {
+    store.dispatch('fetchUserProfile', user)
+  }
+
 
 });
-
+    
 
 

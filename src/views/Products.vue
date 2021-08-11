@@ -5,10 +5,10 @@
         <div class="intro h-100">
             <div class="row h-100 justify-content-center align-items-center">
               <div class="col-md-6">
-                    <h3>Emissões</h3>
+                    <h3>My Products Page</h3>
                     
                  <p>
-                   Lorem ipsum dolor, sit amet consectetur adipisicing elit. Unde, ducimus.
+                   ALL products
                  </p>
               </div>
               <div class="col-md-6">
@@ -22,14 +22,15 @@
           <div class="product-test">
 
 
-            <h3 class="d-inline-block">Lista de emissões / reconhecimentos</h3>
-            <button @click="addNew" class="btn btn-primary float-right">Novo</button>
+            <h3 class="d-inline-block">Products list</h3>
+            <button @click="addNew" class="btn btn-primary float-right">Add Product</button>
 
             <div class="table-responsive">
               
                 <table class="table">
                   <thead>
                     <tr>
+                      <th>Imagem</th>
                       <th>Name</th>
                       <th>Price</th>
                       <th>Modify</th>
@@ -37,7 +38,10 @@
                   </thead>
 
                   <tbody>
-                      <tr v-for="product in products">
+                      <tr v-for="product in myProducts">                        
+                        <td>                          
+                          <img :src="product.images" alt="" width="80px">
+                        </td>
                         <td>
                           {{product.name}}
                         </td>
@@ -67,7 +71,7 @@
         <div class="modal-dialog modal-lg" role="document">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="editLabel">Emitir ∈⊉⊈</h5>
+              <h5 class="modal-title" id="editLabel">Edit Product</h5>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
@@ -77,25 +81,30 @@
                 <div class="row">
                   <!-- main product -->
                   <div class="col-md-8">
+                    
+                    
                     <div class="form-group">
-                      <input type="text" placeholder="Nome (pessoa que vai receber os tokens)" v-model="product.name" class="form-control">
+                      <input type="text" placeholder="Product Name" v-model="product.name" class="form-control">
                     </div>
 
                     <div class="form-group">
-                      <vue-editor v-model="product.description"></vue-editor>
+                      <input type="text" placeholder="Product Description" v-model="product.description" class="form-control">
                     </div>
                   </div>
                   <!-- product sidebar -->
                   <div class="col-md-4">
-                    <h4 class="display-6">Detalhes</h4>
+                    <h4 class="display-6">Product Details</h4>
                     <hr>
 
+                    
                     <div class="form-group">
-                      <input type="text" placeholder="Quantidade" v-model="product.price" class="form-control">
+                      <input type="number" placeholder="Product price" v-model="product.price" class="form-control">
                     </div>
 
+                    
+
                     <div class="form-group">
-                      <input type="text" @keyup.188="addTag" placeholder="Tag" v-model="tag" class="form-control">
+                      <input type="text" @keyup.188="addTag" placeholder="Product tags" v-model="tag" class="form-control">
                       
                       <div  class="d-flex">
                         <p v-for="tag in product.tags">
@@ -107,7 +116,7 @@
 
 
                     <div class="form-group">
-                      <label for="product_image">Imagens</label>
+                      <label for="product_image">Product Images</label>
                       <input type="file" @change="uploadImage" class="form-control">
                     </div>
 
@@ -122,15 +131,11 @@
 
                   </div>
                 </div>
-
-
-
-
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-              <button @click="addProduct()" type="button" class="btn btn-primary" v-if="modal == 'new'">Salvar</button>
-              <button @click="updateProduct()" type="button" class="btn btn-primary" v-if="modal == 'edit'">Atualizar</button>
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button @click="addProduct()" type="button" class="btn btn-primary" v-if="modal == 'new'">Save changes</button>
+              <button @click="updateProduct()" type="button" class="btn btn-primary" v-if="modal == 'edit'">Apply changes</button>
             </div>
           </div>
         </div>
@@ -142,27 +147,32 @@
 </template>
 
 <script>
-import { VueEditor } from "vue2-editor";
+
 import { fb, db} from '../firebase';
 
 export default {
   name: "Products",
   components: {
-    VueEditor
+    
   },
   props: {
     msg: String
   },
 
   data(){
+    
     return {
         products: [],
+        myProducts:[],
         product: {
           name:null,
+          uid:null,
+          email:null,
           description:null,
           price:null,
           tags:[],
           images:[]
+          
         },
         activeItem:null,
         modal: null,
@@ -171,8 +181,12 @@ export default {
   },
 
   firestore(){
+    const user = fb.auth().currentUser;
       return {
-        products: db.collection('emissions'),
+        
+        products: db.collection('products'),
+        myProducts: db.collection('products').where('uid', '==', user.uid)
+        
       }
   },
   methods:{
@@ -194,7 +208,8 @@ export default {
 
     addTag(){
        this.product.tags.push(this.tag);
-       this.tag = "";
+       
+       
     },
     uploadImage(e){
 
@@ -202,7 +217,7 @@ export default {
         
           let file = e.target.files[0];
     
-          var storageRef = fb.storage().ref('emissions/'+ Math.random() + '_'  + file.name);
+          var storageRef = fb.storage().ref('products/'+ Math.random() + '_'  + file.name);
     
           let uploadTask  = storageRef.put(file);
     
@@ -230,6 +245,8 @@ export default {
     reset(){
       this.product = {
           name:null,
+          email:null, 
+          uid:null,
           description:null,
           price:null,
           tags:[],
@@ -241,6 +258,7 @@ export default {
         this.modal = 'new';
         this.reset();
         $('#product').modal('show');
+        
     },
     updateProduct(){
         this.$firestore.products.doc(this.product.id).update(this.product);
@@ -278,23 +296,23 @@ export default {
           Toast.fire({
             type: 'success',
             title: 'Deleted  successfully'
-          })
-
-        
+          })        
         }
-      })
-
-
-        
+      })        
     },
-    readData(){
-
-      
-     
-    },
+    
     addProduct(){
-      
-      this.$firestore.products.add(this.product);
+      var user = fb.auth().currentUser;      
+      this.$firestore.products.add({
+        name: this.product.name,
+        description: this.product.description,
+        uid: user.uid,
+        createdAt: new Date(),
+        email: user.email,
+        price: this.product.price,
+        tags: this.product.tags,
+        images: this.product.images
+      });
       
           Toast.fire({
             type: 'success',
@@ -302,12 +320,15 @@ export default {
           })
 
       $('#product').modal('hide');
+      
     }
 
   
   },
   created(){
-  
+    var user = fb.auth().currentUser;
+    this.uid = user.uid;
+    this.email = user.email;
 
   }
 };

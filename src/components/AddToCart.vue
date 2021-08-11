@@ -1,7 +1,7 @@
 <template>
   <div class="add-to-cart">
    
-        <button class="btn btn-primary" @click="addToCart">Adicionar</button>
+        <button class="btn btn-primary" @click="addToCart"> Add to Cart </button>
     
   </div>
 </template>

@@ -1,7 +1,7 @@
 <template>
   <div class="products" id="products">
       <div class="container">
-          <h1 class="text-center p-5">Experiências e reconhecimentos</h1>
+          <h1 class="text-center p-5">Our Products List</h1>
           <div class="row">
               
               <div class="col-md-4" v-for="product in products">
@@ -41,7 +41,7 @@ import {db} from '../firebase';
 
 
 export default {
-  name: "ProductList",
+  name: "Products-list",
   props: {
     msg: String
   },

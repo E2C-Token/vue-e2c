@@ -1,40 +1,40 @@
 <template>
   <div class="home">
-    <Navbar></Navbar>
-      <Hero/>
-      <Products></Products>
+    <Navbar></Navbar>      
 
       <div class="container h-100">
         <div class="row p-5 h-100 justify-content-center align-items-center">
-          <div class="col-md-6">
-            <img src="/img/svg/product.svg" alt="" width="400">
+          <div>
+            <img src="../assets/capa.jpg" alt="" width="1500">
           </div>
-          <div class="col-md-6">
-            <h3>Mais sobre nós</h3>
-            <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur quaerat voluptate iusto? Nihil voluptas vitae veritatis magnam reprehenderit, reiciendis ex? Libero quasi natus veniam voluptatum, voluptas exercitationem ratione consectetur et!
-            </p>
-             <button class="btn custom-btn btn-outline-primary mr-4">Veja as experiências</button>
+          <br />
+          <div>
+            <img src="../assets/infograf1.jpg" alt="" width="1500">
           </div>
+          <br />
+          <div>
+            <img src="../assets/infograf2.jpg" alt="" width="1500">
+          </div>
+          
         </div>
       </div>
       <login></login>
-
-      <mini-cart></mini-cart>
+    
 
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import Hero from "@/components/Hero.vue";
+
 import Products from "@/sections/Products.vue";
 import Login from "@/components/Login.vue";
+
 
 export default {
   name: "home",
   components: {
-    Hero,Products,Login
+    Products,Login
   }
 };
 </script>
