@@ -17,16 +17,35 @@
           <td>{{ i.fromName }}</td>
           <td>{{ i.name }}</td>
           <td>{{ i.description }}</td>
-          <button
-          type="button"
-          class="btn btn-primary btn-sm mt-2 mb-2 ml-2 mr-2"
-          @click="openIntentionModal(i)"
-        >
-          Liquidar
-        </button>
+          <!-- Button trigger modal -->
+          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#intention">
+            Liquidar
+          </button>
         </tr>
       </tbody>
     </table>
+    <!-- Modal -->
+    <div class="modal fade" id="intention" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="intentionLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="intentionLabel">Intenção de liquidação</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <h2>Detalhes da emissão</h2>
+            <h3>Nome</h3>
+            <h3>Descrição</h3>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+            <button type="button" class="btn btn-primary">Salvar</button>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 <script>
