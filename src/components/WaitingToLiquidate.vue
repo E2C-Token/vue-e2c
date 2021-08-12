@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div>
-      <h3>Tem gente querendo liquidar tokens para você!</h3>    
+      
       <div class="row">
         <div
           class="card ml-3 mr-3 mt-2 mb-2"
@@ -15,6 +15,7 @@
           >
             <h4>{{ i.fromName }}</h4>
             <p>{{ i.description }}</p>
+                      
             <button
               @click="infoToken(i)"
               type="button"
@@ -76,7 +77,8 @@ export default {
       user: {},
       tokenId: null,
       initialAmount: null,
-      amount: null      
+      amount: null,
+      currentAmount: null      
     };
   },
   // mounted() {
@@ -92,17 +94,17 @@ export default {
   },
   methods: {
     infoToken(i) {     
-      this.tokenId = i.tokenId;            
+      this.tokenId = i.emissionId;            
       console.log("liquidar", this.tokenId);      
     },
     liquidar() {
       let payload = {
         tokenId: this.tokenId,
-        initialAmount: this.initialAmount,
+        currentAmount: this.currentAmount,
         amount: this.amount
       }      
       this.$store.dispatch("liquidateTokens", payload);
-      
+      console.log(payload);
     }, 
   },
 };

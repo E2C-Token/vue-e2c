@@ -49,20 +49,20 @@ fb.usersCollection.orderBy("name", "desc").onSnapshot((snapshot) => {
 });
 
 // My Tokens
-fb.tokensE2CCollection
-  .where("uid", "==", "9jMCoeFTDihB8eD4c9QpQIuHr5Z2")
-  .onSnapshot((snapshot) => {
-    let myTokensArray = [];
+// fb.tokensE2CCollection
+//   .where("uid", "==", "9jMCoeFTDihB8eD4c9QpQIuHr5Z2")
+//   .onSnapshot((snapshot) => {
+//     let myTokensArray = [];
 
-    snapshot.forEach((doc) => {
-      let token = doc.data();
-      token.id = doc.id;
+//     snapshot.forEach((doc) => {
+//       let token = doc.data();
+//       token.id = doc.id;
 
-      myTokensArray.push(token);
-    });
+//       myTokensArray.push(token);
+//     });
 
-    store.commit("setMyTokens", myTokensArray);
-  });
+//     store.commit("setMyTokens", myTokensArray);
+//   });
 
 fb.allWishes.onSnapshot((snapshot) => {
   let wishesArray = [];
@@ -179,7 +179,7 @@ const store = new Vuex.Store({
       await fb.tokensE2CCollection.add({
         createdAt: new Date(),
         initialAmount: payload.amount,
-        amount: payload.amount,
+        currentAmount: payload.amount,
         fromUid: fb.auth.currentUser.uid,
         fromName: state.userProfile.name,
         uid: payload.toUid,
@@ -193,6 +193,7 @@ const store = new Vuex.Store({
         createdAt: new Date(),
         fromUid: fb.auth.currentUser.uid,
         emissionId: payload.emissionId,
+        currentAmount: payload.currentAmount,        
         fromName: state.userProfile.name,
         name: payload.toName,
         uid: payload.toUid,
@@ -204,10 +205,12 @@ const store = new Vuex.Store({
     async liquidateTokens({ state, commit }, payload) {
       // update token amount
       const tokenDoc = payload.tokenId;
-      const initialAmount = payload.initialAmount;
-      let subtraction = initialAmount - payload.amount;        
+      const currentAmount = payload.currentAmount;
+      const amount = payload.amount;
+      const total = currentAmount - amount;        
+
         await fb.tokensE2CCollection.doc(tokenDoc).update({
-          amount: subtraction,
+          currentAmount: total
         });
       
       alert("Liquidação concluída!");

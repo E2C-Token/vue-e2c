@@ -8,7 +8,6 @@
        <WaitingToLiquidate />
       </div>
       <!-- <div>
-        <p>{{userProfile}}</p>
         <p>{{intention}}</p>
       </div> -->
     </div>

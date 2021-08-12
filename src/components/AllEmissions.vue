@@ -13,7 +13,7 @@
       </thead>
       <tbody>
         <tr v-for="(i, index) in emissions" :key="index">
-          <td>{{ i.amount }}</td>
+          <td>{{ i.currentAmount }}</td>
           <td>{{ i.fromName }}</td>
           <td>{{ i.name }}</td>
           <td>{{ i.description }}</td>
