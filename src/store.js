@@ -22,7 +22,7 @@ fb.tokensE2CCollection.onSnapshot((snapshot) => {
 });
 
 // Intentions Liquidation
-fb.intentionLiquidation.onSnapshot((snapshot) => {
+fb.myIntentionList.onSnapshot((snapshot) => {
   let liquidationArray = [];
 
   snapshot.forEach((doc) => {

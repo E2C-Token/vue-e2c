@@ -76,8 +76,7 @@ export default {
   methods: {
     openIntentionModal(i) {
       $('#intention').modal('show');
-      this.selected = i;
-      console.log(this.selected);
+      this.selected = i;     
     },
     save() {
       let payload = {
@@ -87,10 +86,10 @@ export default {
         toUid: this.selected.uid
       }
       this.$store.dispatch('setLiquidateIntentionDb', payload);
+      this.descricao = "";
       this.closeModal();
     },
-    closeModal() {
-      this.descricao = "";
+    closeModal() {      
       $('#intention').modal('hide');
     }
   }

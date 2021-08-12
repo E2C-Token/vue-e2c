@@ -7,6 +7,10 @@
       <div class="row">        
        <WaitingToLiquidate />
       </div>
+      <!-- <div>
+        <p>{{userProfile}}</p>
+        <p>{{intention}}</p>
+      </div> -->
     </div>
   </div>
 </template>
@@ -16,14 +20,29 @@
 import WaitingToLiquidate from "../components/WaitingToLiquidate"
 import AllEmissions from "../components/AllEmissions"
 export default {
-  name: "Overview",
-  props: {
-    msg: String,
-  },
+  name: "Overview",  
   components: {    
     AllEmissions,
     WaitingToLiquidate
   },
+  computed: {
+    userProfile() {
+      return this.$store.state.userProfile;
+    },
+    intention() {
+      return this.$store.state.intentionLiquidation;
+    }
+  }
+  // data() {
+  //   return {
+  //     user: {},
+  //     intention: {}
+  //   }
+  // },
+  // mounted() {
+  //   this.user = this.state.userProfile;
+  //   console.log(this.user);
+  // }
 };
 </script>
 

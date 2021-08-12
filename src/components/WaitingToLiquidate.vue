@@ -1,32 +1,33 @@
 <template>
   <div class="container">
-    <h3 v-if="intentions != '' && intentions != null ">Você tem tokens para liquidar!</h3>    
-    <div class="row">
-      <div
-        class="card ml-3 mr-3 mt-2 mb-2"
-        v-for="(i, index) in intentions"
-        :key="index"
-        :value="i"
-      >
+    <div>
+      <h3>Tem gente querendo liquidar tokens para você!</h3>    
+      <div class="row">
         <div
-          class="card-item ml-3 mr-3 mt-2 mb-2"
-          
+          class="card ml-3 mr-3 mt-2 mb-2"
+          v-for="(i, index) in intentions"
+          :key="index"
+          :value="i"
         >
-          <h4>{{ i.fromName }}</h4>
-          <p>{{ i.description }}</p>
-          <button
-            @click="infoToken(i)"
-            type="button"
-            class="btn btn-primary"
-            data-toggle="modal"
-            data-target="#exampleModal"
+          <div
+            class="card-item ml-3 mr-3 mt-2 mb-2"
+            
           >
-            Liquidar
-          </button>
+            <h4>{{ i.fromName }}</h4>
+            <p>{{ i.description }}</p>
+            <button
+              @click="infoToken(i)"
+              type="button"
+              class="btn btn-primary"
+              data-toggle="modal"
+              data-target="#exampleModal"
+            >
+              Aceitar
+            </button>
+          </div>
         </div>
       </div>
     </div>
-    
     <!-- Modal -->
     <div
       class="modal fade"
@@ -84,10 +85,7 @@ export default {
   computed: {
     tokens: function() {
       return this.$store.state.tokens;
-    },
-    userProfile: function() {
-      return this.$store.state.userProfile;
-    },
+    },    
     intentions: function() {
       return this.$store.state.intentionLiquidation;
     }
