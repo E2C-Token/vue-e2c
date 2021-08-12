@@ -24,7 +24,7 @@
         </div>
         <input
           v-model.number="amount"
-          type="text"
+          type="number"
           class="form-control"
           aria-label="Amount (to the nearest dollar)"
         />
@@ -47,7 +47,7 @@
       <div>
         <button
           type="button"
-          class="btn btn-primary btn-sm"
+          class="btn btn-primary btn-sm mt-2 mb-2"
           @click="emitirTokens()"
         >
           Emitir
