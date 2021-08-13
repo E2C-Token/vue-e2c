@@ -15,7 +15,7 @@
           >
             <h4>{{ i.fromName }}</h4>
             <p>{{ i.description }}</p>
-                      
+            <p>{{ i.currentAmount }}</p>         
             <button
               @click="infoToken(i)"
               type="button"
