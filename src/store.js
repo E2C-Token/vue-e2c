@@ -211,8 +211,7 @@ const store = new Vuex.Store({
 
         await fb.tokensE2CCollection.doc(tokenDoc).update({
           currentAmount: total
-        });
-      
+        });      
       alert("Liquidação concluída!");
     },
     async saveWishAccessDb({ state, commit }, payload) {

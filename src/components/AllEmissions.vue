@@ -4,7 +4,8 @@
     <table class="table table-hover">
       <thead>
         <tr>
-          <th scope="col">Quantidade</th>
+          <th scope="col">Quantidade inicial</th>
+           <th scope="col">Quantidade atual</th>
           <th scope="col">Quem reconheceu</th>
           <th scope="col">Quem recebeu</th>
           <th scope="col">Descrição</th>
@@ -13,6 +14,7 @@
       </thead>
       <tbody>
         <tr v-for="(i, index) in emissions" :key="index">
+          <td>{{ i.initialAmount }}</td>
           <td>{{ i.currentAmount }}</td>
           <td>{{ i.fromName }}</td>
           <td>{{ i.name }}</td>

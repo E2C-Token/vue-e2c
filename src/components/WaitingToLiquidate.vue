@@ -21,7 +21,7 @@
               type="button"
               class="btn btn-primary"
               data-toggle="modal"
-              data-target="#exampleModal"
+              data-target="#liquidationModal"
             >
               Aceitar
             </button>
@@ -32,15 +32,15 @@
     <!-- Modal -->
     <div
       class="modal fade"
-      id="exampleModal"
+      id="liquidationModal"
       tabindex="-1"
-      aria-labelledby="exampleModalLabel"
+      aria-labelledby="liquidationModalLabel"
       aria-hidden="true"
     >
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Liquidar quantos tokens?</h5>
+            <h5 class="modal-title" id="liquidationModalLabel">Liquidar quantos tokens?</h5>            
             <button
               type="button"
               class="close"
@@ -51,7 +51,12 @@
             </button>
           </div>
           <div class="modal-body">
-            <label>Quantidade</label>            
+            <div>
+              <p>Token emitido por: {{ fromName }}</p>
+              <p>Descrição: {{ description }}</p>
+              <p>Quantidade atual: {{ currentAmount }}</p>              
+            </div>
+            <label>Quantidade a liquidar</label>            
             <input type="number" v-model="amount"/>
           </div>
           <div class="modal-footer">
@@ -62,8 +67,9 @@
             >
               Cancelar
             </button>
-            <button type="button" class="btn btn-primary" @click="liquidar()">Salvar</button>
+            <button type="button" class="btn btn-primary" @click="liquidar()">Salvar</button>          
           </div>
+          
         </div>
       </div>
     </div>
@@ -78,12 +84,11 @@ export default {
       tokenId: null,
       initialAmount: null,
       amount: null,
-      currentAmount: null      
+      currentAmount: null,
+      fromName: null,
+      description: null     
     };
   },
-  // mounted() {
-  //   this.getAmount();
-  // },
   computed: {
     tokens: function() {
       return this.$store.state.tokens;
@@ -94,8 +99,11 @@ export default {
   },
   methods: {
     infoToken(i) {     
-      this.tokenId = i.emissionId;            
-      console.log("liquidar", this.tokenId);      
+      this.tokenId = i.emissionId;
+      this.currentAmount = i.currentAmount;
+      this.fromName = i.fromName;
+      this.description = i.description;
+      console.log("Emission ID: ", this.tokenId);      
     },
     liquidar() {
       let payload = {
@@ -104,8 +112,12 @@ export default {
         amount: this.amount
       }      
       this.$store.dispatch("liquidateTokens", payload);
-      console.log(payload);
-    }, 
+      this.clearAndHideModal();          
+    },
+    clearAndHideModal() {
+      this.amount = null;
+      $('#liquidationModal').modal('hide');
+    } 
   },
 };
 </script>
